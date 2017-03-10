@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=640, user-scalable=no">
+    <title>首页</title>
+</head>
+<body>
+    <div class="page" id="page">
+        <header>
+            <div class='web-header'>
+                <img class="ichuanyi-logo" src="https://ydcdn2.ichuanyi.cn/media/m/image/module_simple/core/mobile_header_640/image/ichuanyi-logo_0c8521e.png" alt="">
+                <a class="my-info-link" href="https://m.ichuanyi.com/m/page/core/user_home/?IOSCross=1">
+                    <img src="https://ydcdn2.ichuanyi.cn/media/m/image/module_simple/core/mobile_header_640/image/my-icon_604939f.png">
+                </a>
+                <a class="my-shopping-cart" href="https://m.ichuanyi.com/m/page/cart/?IOSCross=1">
+                    <img src="https://ydcdn2.ichuanyi.cn/media/m/image/module_simple/core/mobile_header_640/image/my-shopping-cart-icon_d3a35b8.png">
+                    <span class="shopping-cart-bg" style="display: none;"></span>
+                </a>
+            </div>
+        </header>
+        <div class="page-container">
+            <div class="swiper-container banner">
+                <div class="swiper-wrapper">
+                    <a v-for="banner in banners" :key="banner.id" class="swiper-slide" v-bind:href="banner['link']">
+                        <img class="banner-img" :src="banner['image'] | addDomain" alt="">
+                    </a>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        <div class="hotwords-search-container">
+            <div class="hotwords-wrap">
+                <h2>当季必备</h2>
+                <div class="hotwords-inner">
+                    <div v-for="tag in inSeason['tags']"class="item"><a :href="tag['link']">{{tag['name']}}</a></div>
+                </div>
+            </div>
+            <div class="more-hotwords"><a :href="inSeason['more']"> 更多 &gt;</a></div>
+        </div>
+        <div class="area-link-wrap">
+            <a v-for="suitTab in suitTabs" :href="suitTab['link']">
+                <img :src="suitTab['image'] | addDomain" alt="">
+                <span :style="'color:' + suitTab['color']">{{suitTab['name']}}</span>
+            </a>
+        </div>
+        <div class="hot-sale-wrap">
+            <div v-if="buyBlockLeft" class="left-module">
+                <a :href="buyBlockLeft['link']">
+                    <div class="img-left-wrap"><img :src="buyBlockLeft['image']['path'] | addDomain" alt="" class="wImg"></div>
+                </a>
+            </div>
+            <div v-if="buyBlockRight" class="right-module">
+                <a v-for="buyBlock in buyBlockRight" :href="buyBlock['link']">
+                    <div class="img-right-wrap"><img :src="buyBlock['image']['path'] | addDomain" alt="" class="wImg"></div>
+                </a>
+            </div>
+        </div>
+        <div v-if="modules" class="home-module-wrap">
+            <image-preview :src="modules[0][0]['list'][0]['image']"></image-preview> 
+            <div class="swiper-wrap-info">
+                <div class="swiper-container-module swiper-container">
+                    <div class="swiper-wrapper">
+                        <div v-for="item in modules[0][1]['list']" class="swiper-slide">
+                            <a :href="item.link"><img :src="item.image | addDomain" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-if="modules" class="home-module-wrap">
+            <image-preview :src="modules[1][0]['list'][0]['image']"></image-preview>
+            <ul>
+                <li v-for="item in modules[1][1]['list']" class="three-image-preview">
+                    <a :href="item.link"><img :src="item.image | addDomain" alt=""></a>
+                </li>
+            </ul>
+            <ul>
+                <li v-for="item in modules[1][2]['list']" class="three-image-preview">
+                    <a :href="item.link"><img :src="item.image | addDomain" alt=""></a>
+                </li>
+            </ul>
+        </div>
+        <div v-if="modules" class="home-module-wrap">
+            <image-preview :src="modules[2][0]['list'][0]['image']"></image-preview>
+            <div class="swiper-wrap-info">
+                <div class="swiper-container-module swiper-container" style="height:474px">
+                    <div class="swiper-wrapper">
+                        <div v-for="item in modules[2][1]['list']" class="swiper-slide">
+                            <a :href="item.link"><img :src="item.image | addDomain" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="water-fall-good-wrap">
+            <div class="waterfall-container clearfix">
+                <div v-for="choiceness in choicenessList" class="goods-suit-cell-wrap">
+                    <a :href="choiceness.link"><img class="goods-img" :src="choiceness.image" alt=""></a>
+                    <div class="shopper-info">
+                        <a :href="choiceness.shopKeeperLink"><img :src="choiceness.avatar | addDomain" alt="" class="shopper-img"></a>
+                        <span class="shopper-name">{{choiceness.username}}</span>
+                        <div class="addlike-wrap">
+                            <span class="collect-count-num">{{choiceness.collectCount}}</span>
+                            <span class="collect-icon love-icon"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../build/main.js"></script>
+</body>
+</html>
+
