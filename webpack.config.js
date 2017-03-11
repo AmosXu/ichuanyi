@@ -1,12 +1,13 @@
 var path = require('path');
 var webpack = require('webpack');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-    context: __dirname + "/",
-    entry: './app/js/index.js',
+    entry: './src/js/index.js',
     output: {
-        path: path.join(__dirname, 'build'),
-        filename: 'main.js'
+      path: path.resolve(__dirname, './dist'),
+      publicPath: '/dist/',
+      filename: 'build.js'
     },
     resolve: {
       alias: {
@@ -14,16 +15,26 @@ module.exports = {
       }
     },
     module: {
-        loaders: [{
-            test: /\.js$/,
-            loader: 'babel',
-            exclude: /node_modules/
-        }, {
-            test: /\.vue$/,
-            loader: 'vue'
-        }, {
-            test: /\.scss$/,
-            loader: 'style!css!sass',
-        }]
-    }
+      loaders: [{
+          test: /\.js$/,
+          loader: 'babel',
+          exclude: /node_modules/
+      }, {
+           test: /\.vue$/,
+           loader: 'vue-loader',
+           options: {
+              loaders: {
+                scss: 'vue-style-loader!css-loader!sass-loader',
+                sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax' 
+              }
+            }
+      }, {
+          test: /\.scss$/,
+          loader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader")
+               
+      }]
+    },
+    plugins: [
+      new ExtractTextPlugin("style.css")
+    ]
 }
